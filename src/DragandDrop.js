@@ -27,6 +27,30 @@ class DragandDrop extends Component{
     ]
   }
 
+  onDragOver = (event) =>{
+    event.preventDefault();
+  }
+
+  onDragStart = (event, id) =>{
+    console.log('dragstart: ', id);
+    event.dataTransfer.setData("id", id);
+  }
+
+  onDrop = (event, cat) =>{
+    let id = event.dataTransfer.getData('id');
+    let boxContents = this.state.boxContents.filter((boxContents) =>{
+      if(boxContents.name === id){
+        boxContents.category = cat;
+      }
+      return boxContents;
+    });
+
+    this.setState({
+      ...this.state,
+      boxContents,
+    });
+  }
+
   render(){
     const boxContents ={
       first: [],
@@ -51,12 +75,14 @@ class DragandDrop extends Component{
     return(
       <div className='containerDrag'>
         
-        <div className='firstContainer'>
+        <div className='firstContainer' onDragOver={(event) => this.onDragOver(event)}
+         onDrop={(event) => this.onDrop(event, 'first')}>
           <span>First</span>
           {boxContents.first}
         </div>
 
-        <div className='droppable' onDragOver={(event) => this.onDragOver(event)}>
+        <div className='droppable' onDragOver={(event) => this.onDragOver(event)}
+          onDrop={(event) => this.onDrop(event, 'second')}>
           <span>Second</span>
           {boxContents.second}
         </div>
