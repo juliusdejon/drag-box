@@ -1,0 +1,30 @@
+.containerDrag{
+  display: inline-block;
+
+  width: 100vw;
+  height: 500px;
+
+  background-color: BLACK;
+}
+
+.firstContainer{
+  display: inline-block;
+
+  width: 200px;
+  height: 100%;
+
+  background-color: WHITE;
+
+  float: left;
+}
+
+.secondContainer{  
+  display: inline-block;
+
+  width: 200px;
+  height: 100%;
+
+  background-color: WHITE;
+
+  float: right;
+}
