@@ -52,6 +52,17 @@ class DragandDrop extends Component{
     });
   }
 
+  onDragEnter(event, id){
+    console.log('dragEnter: ', id);
+    event.dataTransfer.setData("id2", id);
+  }
+
+  onDragLeave(event){
+    event.dataTransfer.clearData('id2');
+  }
+
+
+
   render(){
     const boxContents ={
       first: [],
@@ -63,6 +74,8 @@ class DragandDrop extends Component{
         <div
           key={things.name}
           onDragStart={(event) => this.onDragStart(event, things.name)}
+          onDragEnter={(event) => this.onDragEnter(event, things.name)}
+          onDragLeave={(event) => this.onDragLeave(event)}
           draggable
           className='draggable'
           style={{backgroundColor: things.bgColor}}>
@@ -95,102 +108,6 @@ class DragandDrop extends Component{
 
 }
 
-class DragAndDropItems extends Component{
-  onDragStart(event){
-    event.dataTransfer.setData('id', event.target.key);
-  }
 
-  onDragOver(event){
-    event.preventDefault();
-  }
-
-  onDrop(event){
-    let id = event.dataTransfer.getData('id');
-
-    event.target.appendChild(document.getElementById(id));
-  }
-
-  onDragEnter(event){
-    event.dataTransfer.setData('id2', event.target.key);
-    console.log('id2: ', event.target.key);
-  }
-
-  onDragLeave(event){
-    event.dataTransfer.clearData('id2');
-  }
-
-  render(){
-    const {id, bgColor, name}= this.props;
-    return(
-      <div
-        onDrop={(event) => this.onDrop(event)}
-        onDragOver={(event) => this.onDragOver(event)}
-      >
-
-         <div
-          onDragStart={(event) => this.onDragStart(event)}
-
-          onDragEnter={(event) => this.onDragEnter(event)}
-          onDragLeave={(event) => this.onDragLeave(event)}
-          draggable
-          className='draggable'
-          style={{backgroundColor: bgColor}}
-          id={id}
-        >
-          {name}
-        </div>
-      </div>
-       
-    
-    )
-  }
-
-}
-
-class DragandDrop2 extends Component{
-  constructor(props){
-    super(props);
-
-    this.state={
-      first: {
-        name: 'Hello World',
-        id: 'first',
-        bgColor: 'BLUE',
-      },
-      second:{
-        name: 'Good bye World',
-        id: 'second',
-        bgColor: 'ORANGE',
-      },
-    }
-  }
-
-  render(){
-    const {first, second} = this.state;
-
-
-    const firsts = <DragAndDropItems id={first.id}
-    name={first.name}
-    bgColor={first.bgColor} 
-    />;
-
-    const seconds = <DragAndDropItems id={second.id}
-    name={second.name}
-    bgColor={second.bgColor} 
-    />;
-
-    return(
-      <div>
-        <div className='draggable firstContainer'>
-          {firsts}
-        </div>
-        
-        <div className='draggable firstContainer'>
-         {seconds}
-        </div>
-      </div>
-    )
-  }
-}
 
 export default DragandDrop;
