@@ -54,24 +54,6 @@ class Complete extends Component{
   }
 
 
-  componentDidMount(){
-    const {id, name} = this.state;
-
-    if(id === '' || name === ''){
-      this.setState({
-        id: '0',
-        name: '&nbsp;',
-        bgColor: 'WHITE',
-
-        hasItem: false,
-      })
-    }else{
-      this.setState({
-        hasItem: true,
-      })
-    }
-  }
-
   render(){
     const {id, name, bgColor} = this.state;
 
