@@ -46,7 +46,7 @@ class App extends Component {
                 </td>
               </tr>
               <tr>
-                <td></td>
+                <td><DragContainer /></td>
                 <td>  
                   <DragContainer items={third} />
                 </td>
