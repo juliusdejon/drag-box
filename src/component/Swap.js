@@ -19,12 +19,9 @@ class Swap extends Component{
     let {first, second} = this.state;
 
     return(
-      <div>
-        <p>
-          {first} swap {second}
-        </p>
-        <button onClick={() => this.onClick(first, second)}>Click to Swap</button>
-      </div>
+      {
+        
+      }
     );
   }
 

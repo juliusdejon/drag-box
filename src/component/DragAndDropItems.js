@@ -4,38 +4,28 @@ import './DragandDrop.css';
 class DragAndDropItems extends Component{
   onDragStart(event){
     event.dataTransfer.setData('id', event.target.id);
+    console.log(event.target.id);
   }
 
-  onDragEnter(event, id){
-    if(id === event.target.id){
-      event.dataTransfer.setData('id2', event.target.id);
-      console.log('id2: ', event.target.id);
-    }
-  }
-
-  onDragLeave(event){
-    let id = event.dataTransfer.getData('id');
-    let id2 = event.dataTransfer.getData('id2');
-
-    if (id !== id2){
-      event.dataTransfer.clearData('id2');
-    }
-    
+  onDragEnter(event ,id){
+    event.dataTransfer.setData('id2', id);
+    console.log('id2: ', id);
   }
 
   render(){
-    const {id, bgColor, name}= this.props;
+    const {bgColor, id, name} = this.props;
+    
     return(
       <div
         onDragStart={(event) => this.onDragStart(event)}
         onDragEnter={(event) => this.onDragEnter(event, id)}
-        onDragLeave={(event) => this.onDragLeave(event)}
         
         draggable
 
-        className='draggable'
+        className={'draggable ' + this.props.className}
         style={{backgroundColor: bgColor}}
         id={id}
+        key={id}
       >
         {name}
       </div>

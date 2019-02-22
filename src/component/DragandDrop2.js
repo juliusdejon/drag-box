@@ -1,45 +1,47 @@
 import React, {Component} from 'react';
-import DragAndDropItems from './DragAndDropItems'
 import './DragandDrop.css'
 
+import Items from './DragAndDropItems';
+
 class DragandDrop2 extends Component{
+
   onDragOver(event){
     event.preventDefault();
   }
 
   onDrop(event){
     let id = event.dataTransfer.getData('id');
-    let id2 = event.dataTransfer.getData('id2')
-
-    if(event.target.id !== id){
+    let id2 = event.dataTransfer.getData('id2');
+    
+    console.log('id: ',id);
+    if(id !== id2){
       event.target.appendChild(document.getElementById(id));
       
-      event.dataTransfer.clearData('id');
-      event.dataTransfer.setData('id', id2);
-      
-      console.log('onDrop id2: ', id2);
     }
-
-    event.dataTransfer.clearData('id');
     
+    event.dataTransfer.clearData('id');
+  }
+
+  onDragEnter(event){
+    let id = event.dataTransfer.getData('id');
+
+    console.log('Dragged id: ', id);
+    console.log('Container:: ', event.target.id);
   }
 
   render(){
-    const first = this.props.items;
-
-    const firsts = <DragAndDropItems id={first.id}
-    name={first.name}
-    bgColor={first.bgColor} 
-    />;
+    const items = this.props.items;
 
     return(
       <div
         onDrop={(event) => this.onDrop(event)}
         onDragOver={(event) => this.onDragOver(event)}
-        id={first.id}
+        onDragEnter={(event) => this.onDragEnter(event)}
+
+        id={items.id}
         className='firstContainer'
       >
-        {firsts} 
+        <Items id={items.id} name={items.name} bgColor={items.bgColor} />
       </div>
     )
   }
