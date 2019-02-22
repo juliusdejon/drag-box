@@ -24,7 +24,12 @@ class App extends Component {
       name: 'Third',
       id: 'third',
       bgColor: 'YELLOW',
-    }
+    },
+    fourth:{
+      name: 'Fourth',
+      id: 'fourth',
+      bgColor: 'RED',
+    },
   }
   render() {
     const {first, second, third} = this.state;
@@ -77,10 +82,15 @@ class App2 extends Component{
       name: 'Third',
       id: 'third',
       bgColor: 'YELLOW',
-    }
+    },
+    fourth:{
+      name: 'Fourth',
+      id: 'fourth',
+      bgColor: 'RED',
+    },
   }
   render() {
-    const {first, second, third} = this.state;
+    const {first, second, third, fourth} = this.state;
 
     return (
       <div className="App ">
@@ -105,10 +115,13 @@ class App2 extends Component{
                 </td>
               </tr>
             </tbody>
+
+                
             
           </table>
          
         </div>
+        <DragCom id={fourth.id} name={fourth.name} bgColor={fourth.bgColor} />
       </div>
     );
   }
