@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 
 class Complete extends Component{
 
+  state={
+    id: this.props.id,
+    name: this.props.name,
+    bgColor: this.props.bgColor,
+  }
+
   onDragStart(event){
     event.dataTransfer.setData('id', event.target.id);
     console.log(event.target.id);
@@ -31,7 +37,7 @@ class Complete extends Component{
     event.dataTransfer.clearData('id');
   }
 
-  onDragEnter(event){
+  onDragEnterContainer(event){
     let id = event.dataTransfer.getData('id');
     let id2 = event.dataTransfer.getData('id2');
 
@@ -44,10 +50,32 @@ class Complete extends Component{
 
 
   render(){
-    return(
-      <div>
+    const {id, name, bgColor} = this.state;
 
+    return(
+      <div
+        onDrop={(event) => this.onDrop(event)}
+        onDragOver={(event) => this.onDragOver(event)}
+        onDragEnter={(event) => this.onDragEnterContainer(event)}
+        
+        id={id}
+      >
+        <div
+          onDragStart={(event) => this.onDragStart(event)}
+          onDragEnter={(event) => this.onDragEnter(event, id)}
+          
+          draggable
+
+          className={'draggable '}
+          style={{backgroundColor: bgColor}}
+          id={id}
+          key={id}
+        >
+          {name}
+        </div>
       </div>
     );
   }
 }
+
+export default Complete;
