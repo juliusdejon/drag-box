@@ -13,8 +13,12 @@ class DragAndDropItems extends Component{
   }
 
   render(){
-    const {bgColor, id, name} = this.props;
-    
+
+    const id = this.props.id;
+    const name = this.props.name;
+    const bgColor = this.props.bgColor;
+
+
     return(
       <div
         onDragStart={(event) => this.onDragStart(event)}
@@ -22,7 +26,7 @@ class DragAndDropItems extends Component{
         
         draggable
 
-        className={'draggable ' + this.props.className}
+        className={'draggable '}
         style={{backgroundColor: bgColor}}
         id={id}
         key={id}

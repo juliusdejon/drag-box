@@ -5,6 +5,8 @@
   height: 100%;
 
   background-color: WHITE;
+
+  cursor: pointer;
 }
 
 .secondContainer{  
@@ -14,4 +16,6 @@
   height: 100%;
 
   background-color: WHITE;
+
+  cursor: pointer;
 }

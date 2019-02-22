@@ -16,7 +16,9 @@ class DragandDrop2 extends Component{
     console.log('id: ',id);
     if(id !== id2){
       event.target.appendChild(document.getElementById(id));
-      
+    }else{
+      event.dataTransfer.clearData('id2');
+      event.dataTransfer.clearData('id')
     }
     
     event.dataTransfer.clearData('id');
@@ -24,10 +26,15 @@ class DragandDrop2 extends Component{
 
   onDragEnter(event){
     let id = event.dataTransfer.getData('id');
+    let id2 = event.dataTransfer.getData('id2');
 
-    console.log('Dragged id: ', id);
-    console.log('Container:: ', event.target.id);
+    if(id !== id2){
+      console.log('not same');
+    }else{
+      console.log('same');
+    }
   }
+
 
   render(){
     const items = this.props.items;
