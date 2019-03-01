@@ -1,13 +1,13 @@
 {
-  "main.css": "/drag-box/static/css/main.66a0b2ba.chunk.css",
-  "main.js": "/drag-box/static/js/main.222d237c.chunk.js",
-  "main.js.map": "/drag-box/static/js/main.222d237c.chunk.js.map",
+  "main.css": "/drag-box/static/css/main.a1edd0a8.chunk.css",
+  "main.js": "/drag-box/static/js/main.44cb5cf2.chunk.js",
+  "main.js.map": "/drag-box/static/js/main.44cb5cf2.chunk.js.map",
   "runtime~main.js": "/drag-box/static/js/runtime~main.0a5d63d1.js",
   "runtime~main.js.map": "/drag-box/static/js/runtime~main.0a5d63d1.js.map",
-  "static/js/2.f1320c0d.chunk.js": "/drag-box/static/js/2.f1320c0d.chunk.js",
-  "static/js/2.f1320c0d.chunk.js.map": "/drag-box/static/js/2.f1320c0d.chunk.js.map",
+  "static/js/2.063ce5bc.chunk.js": "/drag-box/static/js/2.063ce5bc.chunk.js",
+  "static/js/2.063ce5bc.chunk.js.map": "/drag-box/static/js/2.063ce5bc.chunk.js.map",
   "index.html": "/drag-box/index.html",
-  "precache-manifest.e4b84164f6a114372f513657aca6a293.js": "/drag-box/precache-manifest.e4b84164f6a114372f513657aca6a293.js",
+  "precache-manifest.e1a5e164d9c5527e105cc9a422cb55bb.js": "/drag-box/precache-manifest.e1a5e164d9c5527e105cc9a422cb55bb.js",
   "service-worker.js": "/drag-box/service-worker.js",
-  "static/css/main.66a0b2ba.chunk.css.map": "/drag-box/static/css/main.66a0b2ba.chunk.css.map"
+  "static/css/main.a1edd0a8.chunk.css.map": "/drag-box/static/css/main.a1edd0a8.chunk.css.map"
 }
