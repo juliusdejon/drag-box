@@ -62,7 +62,7 @@ class App extends React.Component {
       {
         name: "basket3",
         items: [
-          "cyan",
+          "cyan","blue"
         ]
       },
     ],
@@ -86,6 +86,11 @@ class App extends React.Component {
         name: "cyan",
         color: "#00bcd4",
         text: "Cyan"
+      },
+      {
+        name: "blue",
+        color: "blue",
+        text: "Blue"
       },
     ],
 
