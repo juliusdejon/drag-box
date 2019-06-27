@@ -80,24 +80,28 @@ class App extends React.Component {
     ]
   };
 
-  handleOnDragStart = (event, from) => {
+  handleOnDragStart = (event, containerId) => {
     const id = event.target.id;
 
     console.log("Dragging the", id);
-    console.log("From ", from);
+    if (containerId === 0) {
+      console.log("This comes from Products in Rate Plan");
+    } else {
+      console.log("This comes from Available Products");
+    }
 
     event.dataTransfer.setData("id", id);
-    event.dataTransfer.setData("from", from);
+    event.dataTransfer.setData("containerId", containerId);
   };
 
   handleOnDrop = (event, i) => {
     const id = event.dataTransfer.getData("id");
-    const from = event.dataTransfer.getData("from");
+    const containerId = event.dataTransfer.getData("containerId");
 
-    if (from != i) {
+    if (containerId != i) {
       const productsContainer = this.state.productsContainer.map(
         (product, index) => {
-          if (index == from) {
+          if (index == containerId) {
             product.items = product.items.filter(item => {
               return item !== id;
             });
