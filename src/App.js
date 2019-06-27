@@ -1,218 +1,148 @@
-import React from 'react';
-import './App.css'
+import React from "react";
+import "./App.css";
 
 //Don't remove any old codes? but I can add more.
 
-const Item = ({
-  color,
-  id,
-  text,
-  name,
-  onDragStartHandler
-}) => ( <
-  section className = "item"
-  style = {
-    {
-      backgroundColor: color,
-    }
-  }
-
-  draggable
-
-  onDragStart = {
-    onDragStartHandler
-  }
-
-
-  key = {
-    id
-  }
-  id = {
-    name
-  } >
-  <
-  span > {
-    text
-  } < /span> < /
-  section >
+const Item = ({ color, id, text, name, onDragStartHandler }) => (
+  <section
+    className="item"
+    style={{
+      backgroundColor: color
+    }}
+    draggable
+    onDragStart={onDragStartHandler}
+    key={id}
+    id={name}
+  >
+    <span> {text} </span>{" "}
+  </section>
 );
 
-const getItems = (basketItems, items) => basketItems.map(basketItem =>
-  items.filter(item => basketItem === item.name)[0]
-)
+const getItems = (productItems, items) =>
+  productItems.map(
+    productItem => items.filter(item => productItem === item.name)[0]
+  );
 
-const Basket = ({
+const Product = ({
   name,
   items,
   onDropHandler,
   onDragOverHandler,
   onDragStartHandler,
   onClickHandler
-}) => ( <
-  article className = "basket"
-  key = {
-    name
-  }
-
-  onDrop = {
-    onDropHandler
-  }
-  onDragOver = {
-    onDragOverHandler
-  } > {
-    items.map((item, index) => ( <
-      Item {
-        ...item
-      }
-      onDragStartHandler = {
-        onDragStartHandler
-      }
-      onClickHandler = {
-        onClickHandler
-      }
-      key = {
-        'item' + index
-      }
+}) => (
+  <article
+    className="product"
+    key={name}
+    onDrop={onDropHandler}
+    onDragOver={onDragOverHandler}
+  >
+    {" "}
+    {items.map((item, index) => (
+      <Item
+        {...item}
+        onDragStartHandler={onDragStartHandler}
+        onClickHandler={onClickHandler}
+        key={"item" + index}
       />
-    ))
-  } <
-  /article>
+    ))}{" "}
+  </article>
 );
 
 class App extends React.Component {
-
   state = {
-    productsContainer: [{
-        name: "basket1",
-        items: [
-          "indigo",
-          "red",
-          "cyan",
-          "blue",
-          "deeporange",
-        ]
+    productsContainer: [
+      {
+        name: "Products in this Rate Plan",
+        items: ["standard", "heritage"]
       },
       {
-        name: "basket2",
-        items: [
-          "deeporange",
-        ]
-      },
+        name: "Available Products",
+        items: ["deluxe"]
+      }
     ],
-    items: [{
-        name: "indigo",
+    items: [
+      {
+        name: "standard",
         color: "#3f51b5",
         text: "Standard"
       },
       {
-        name: "deeporange",
+        name: "heritage",
         color: "#ff5722",
-        text: "Deluxe"
-      },
-      {
-        name: "red",
-        color: "#f44336",
-        text: "Standard with Breakfasts"
-      },
-      {
-        name: "cyan",
-        color: "#00bcd4",
-        text: "Deluxe with Breakfast"
-      },
-      {
-        name: "blue",
-        color: "blue",
         text: "Heritage"
       },
-    ],
+      {
+        name: "deluxe",
+        color: "blue",
+        text: "Deluxe"
+      }
+    ]
+  };
 
-
-  }
-
-  handleOnDragStart = (event, firstId) => {
+  handleOnDragStart = (event, from) => {
     const id = event.target.id;
 
-    console.log('Drag: ', id);
-    console.log('First ID: ', firstId);
+    console.log("Dragging the", id);
+    console.log("From ", from);
 
-    event.dataTransfer.setData('id', id);
-    event.dataTransfer.setData('firstId', firstId);
-  }
+    event.dataTransfer.setData("id", id);
+    event.dataTransfer.setData("from", from);
+  };
 
   handleOnDrop = (event, i) => {
-    const id = event.dataTransfer.getData('id');
-    const firstId = event.dataTransfer.getData('firstId');
+    const id = event.dataTransfer.getData("id");
+    const from = event.dataTransfer.getData("from");
 
-    if (firstId != i) {
+    if (from != i) {
+      const productsContainer = this.state.productsContainer.map(
+        (product, index) => {
+          if (index == from) {
+            product.items = product.items.filter(item => {
+              return item !== id;
+            });
+          }
+          if (index === i) {
+            product.items = product.items.concat(id);
+          }
 
-      const productsContainer = this.state.productsContainer.map((basket, index) => {
-        console.log('Initial basket ' + index, basket.items);
-        if (index == firstId) {
-          basket.items = basket.items.filter((item) => {
-            return (item !== id);
-          })
+          return product;
         }
-        if (index === i) {
-          basket.items = basket.items.concat(id);
-        }
+      );
 
-        return basket;
-      })
-
-      console.log(productsContainer)
+      console.log(productsContainer);
 
       this.setState({
         productsContainer: productsContainer
-      })
-
+      });
     } else {
-      console.log('No')
+      console.log("No");
     }
+  };
 
-
-  }
-
-  handleOnDragOver = (event) => {
+  handleOnDragOver = event => {
     event.preventDefault();
-  }
-
+  };
 
   render() {
-    const {
-      productsContainer,
-      items,
-    } = this.state;
+    const { productsContainer, items } = this.state;
 
-    return ( <
-      div className = "app" >
-      <
-      div className = "basket-container" > {
-        productsContainer.map((basket, index) => ( <
-          Basket items = {
-            getItems(basket.items, items)
-          }
-          listkey = {
-            basket.name
-          }
-
-          onDragStartHandler = {
-            (event) => this.handleOnDragStart(event, index)
-          }
-          onDropHandler = {
-            (event) => this.handleOnDrop(event, index)
-          }
-          onDragOverHandler = {
-            this.handleOnDragOver
-          }
-
-          key = {
-            index
-          }
-          />
-        ))
-      } <
-      /div> < /
-      div >
+    return (
+      <div className="app">
+        <div className="product-container">
+          {" "}
+          {productsContainer.map((product, index) => (
+            <Product
+              items={getItems(product.items, items)}
+              listkey={product.name}
+              onDragStartHandler={event => this.handleOnDragStart(event, index)}
+              onDropHandler={event => this.handleOnDrop(event, index)}
+              onDragOverHandler={this.handleOnDragOver}
+              key={index}
+            />
+          ))}{" "}
+        </div>{" "}
+      </div>
     );
   }
 }

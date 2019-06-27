@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow:400,700|Lato:400,500,600,700');
+@import url("https://fonts.googleapis.com/css?family=Archivo+Narrow:400,700|Lato:400,500,600,700");
 
 /* Variables
  --------------------------------------------------*/
@@ -130,7 +130,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -158,7 +158,7 @@ body {
   font-family: Lato, sans-serif;
 }
 
-.basket-container {
+.product-container {
   display: grid;
   grid-gap: 24px;
   padding: 24px;
@@ -169,7 +169,7 @@ body {
   min-height: 600px;
 }
 
-.basket {
+.product {
   background: #e0e0e0;
   padding: 12px;
 }
