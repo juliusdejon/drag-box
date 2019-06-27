@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 //Don't remove any old codes? but I can add more.
@@ -49,8 +49,8 @@ const Product = ({
   </article>
 );
 
-class App extends React.Component {
-  state = {
+function App(props) {
+  const [values, setValues] = useState({
     productsContainer: [
       {
         name: "Products in this Rate Plan",
@@ -78,9 +78,9 @@ class App extends React.Component {
         text: "Deluxe"
       }
     ]
-  };
+  });
 
-  handleOnDragStart = (event, containerId) => {
+  const handleOnDragStart = (event, containerId) => {
     const id = event.target.id;
 
     console.log("Dragging the", id);
@@ -94,12 +94,12 @@ class App extends React.Component {
     event.dataTransfer.setData("containerId", containerId);
   };
 
-  handleOnDrop = (event, i) => {
+  const handleOnDrop = (event, i) => {
     const id = event.dataTransfer.getData("id");
     const containerId = event.dataTransfer.getData("containerId");
 
     if (containerId != i) {
-      const productsContainer = this.state.productsContainer.map(
+      const productsContainer = values.productsContainer.map(
         (product, index) => {
           if (index == containerId) {
             product.items = product.items.filter(item => {
@@ -116,39 +116,33 @@ class App extends React.Component {
 
       console.log(productsContainer);
 
-      this.setState({
-        productsContainer: productsContainer
-      });
+      setValues(productsContainer);
     } else {
       console.log("No");
     }
   };
 
-  handleOnDragOver = event => {
+  const handleOnDragOver = event => {
     event.preventDefault();
   };
 
-  render() {
-    const { productsContainer, items } = this.state;
-
-    return (
-      <div className="app">
-        <div className="product-container">
-          {" "}
-          {productsContainer.map((product, index) => (
-            <Product
-              items={getItems(product.items, items)}
-              listkey={product.name}
-              onDragStartHandler={event => this.handleOnDragStart(event, index)}
-              onDropHandler={event => this.handleOnDrop(event, index)}
-              onDragOverHandler={this.handleOnDragOver}
-              key={index}
-            />
-          ))}{" "}
-        </div>{" "}
-      </div>
-    );
-  }
+  return (
+    <div className="app">
+      <div className="product-container">
+        {" "}
+        {values.productsContainer.map((product, index) => (
+          <Product
+            items={getItems(product.items, values.items)}
+            listkey={product.name}
+            onDragStartHandler={event => handleOnDragStart(event, index)}
+            onDropHandler={event => handleOnDrop(event, index)}
+            onDragOverHandler={handleOnDragOver}
+            key={index}
+          />
+        ))}{" "}
+      </div>{" "}
+    </div>
+  );
 }
 
 export default App;
