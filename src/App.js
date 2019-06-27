@@ -1,130 +1,220 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './App.css'
 
-import './App.css';
+//Don't remove any old codes? but I can add more.
 
-// import Drag from './component/DragandDrop2';
-
-import DragContainer from './component/DragandDrop2';
-
-import DragCom from './component/DragAndDropCombined';
-
-class App extends Component {
-  state={
-    first: {
-      name: 'Hello World',
-      id: 'first',
-      bgColor: 'BLUE',
-    },
-    second:{
-      name: 'Good bye World',
-      id: 'second',
-      bgColor: 'ORANGE',
-    },
-    third:{
-      name: 'Third',
-      id: 'third',
-      bgColor: 'YELLOW',
-    },
-    fourth:{
-      name: 'Fourth',
-      id: 'fourth',
-      bgColor: 'RED',
-    },
+const Item = ({
+  color,
+  id,
+  text,
+  name,
+  onDragStartHandler
+}) => ( <
+  section className = "item"
+  style = {
+    {
+      backgroundColor: color,
+    }
   }
-  render() {
-    const {first, second, third} = this.state;
 
-    return (
-      <div className="App ">
-        <p className='Header'>
-          Drag And Drop (?)
-        </p>
-        <div className='containerDrag'>
-          <table>
-            <tbody>
-              <tr>
-                <td> 
-                  <DragContainer items={first}/>
-                </td>
-                <td> 
-                  <DragContainer items={second} />
-                </td>
-              </tr>
-              <tr>
-                <td><DragContainer items={second} /></td>
-                <td>  
-                  <DragContainer items={third} />
-                </td>
-              </tr>
-            </tbody>
-            
-          </table>
-         
-        </div>
-      </div>
+  draggable
+
+  onDragStart = {
+    onDragStartHandler
+  }
+
+
+  key = {
+    id
+  }
+  id = {
+    name
+  } >
+  <
+  span > {
+    text
+  } < /span> < /
+  section >
+);
+
+const getItems = (basketItems, items) => basketItems.map(basketItem =>
+  items.filter(item => basketItem === item.name)[0]
+)
+
+const Basket = ({
+  name,
+  items,
+  onDropHandler,
+  onDragOverHandler,
+  onDragStartHandler,
+  onClickHandler
+}) => ( <
+  article className = "basket"
+  key = {
+    name
+  }
+
+  onDrop = {
+    onDropHandler
+  }
+  onDragOver = {
+    onDragOverHandler
+  } > {
+    items.map((item, index) => ( <
+      Item {
+        ...item
+      }
+      onDragStartHandler = {
+        onDragStartHandler
+      }
+      onClickHandler = {
+        onClickHandler
+      }
+      key = {
+        'item' + index
+      }
+      />
+    ))
+  } <
+  /article>
+);
+
+class App extends React.Component {
+
+  state = {
+    productsContainer: [{
+        name: "basket1",
+        items: [
+          "indigo",
+          "red",
+          "cyan",
+          "blue",
+          "deeporange",
+        ]
+      },
+      {
+        name: "basket2",
+        items: [
+          "deeporange",
+        ]
+      },
+    ],
+    items: [{
+        name: "indigo",
+        color: "#3f51b5",
+        text: "Standard"
+      },
+      {
+        name: "deeporange",
+        color: "#ff5722",
+        text: "Deluxe"
+      },
+      {
+        name: "red",
+        color: "#f44336",
+        text: "Standard with Breakfasts"
+      },
+      {
+        name: "cyan",
+        color: "#00bcd4",
+        text: "Deluxe with Breakfast"
+      },
+      {
+        name: "blue",
+        color: "blue",
+        text: "Heritage"
+      },
+    ],
+
+
+  }
+
+  handleOnDragStart = (event, firstId) => {
+    const id = event.target.id;
+
+    console.log('Drag: ', id);
+    console.log('First ID: ', firstId);
+
+    event.dataTransfer.setData('id', id);
+    event.dataTransfer.setData('firstId', firstId);
+  }
+
+  handleOnDrop = (event, i) => {
+    const id = event.dataTransfer.getData('id');
+    const firstId = event.dataTransfer.getData('firstId');
+
+    if (firstId != i) {
+
+      const productsContainer = this.state.productsContainer.map((basket, index) => {
+        console.log('Initial basket ' + index, basket.items);
+        if (index == firstId) {
+          basket.items = basket.items.filter((item) => {
+            return (item !== id);
+          })
+        }
+        if (index === i) {
+          basket.items = basket.items.concat(id);
+        }
+
+        return basket;
+      })
+
+      console.log(productsContainer)
+
+      this.setState({
+        productsContainer: productsContainer
+      })
+
+    } else {
+      console.log('No')
+    }
+
+
+  }
+
+  handleOnDragOver = (event) => {
+    event.preventDefault();
+  }
+
+
+  render() {
+    const {
+      productsContainer,
+      items,
+    } = this.state;
+
+    return ( <
+      div className = "app" >
+      <
+      div className = "basket-container" > {
+        productsContainer.map((basket, index) => ( <
+          Basket items = {
+            getItems(basket.items, items)
+          }
+          listkey = {
+            basket.name
+          }
+
+          onDragStartHandler = {
+            (event) => this.handleOnDragStart(event, index)
+          }
+          onDropHandler = {
+            (event) => this.handleOnDrop(event, index)
+          }
+          onDragOverHandler = {
+            this.handleOnDragOver
+          }
+
+          key = {
+            index
+          }
+          />
+        ))
+      } <
+      /div> < /
+      div >
     );
   }
 }
 
-class App2 extends Component{
-  state={
-    first: {
-      name: 'Hello World',
-      id: 'first',
-      bgColor: 'BLUE',
-    },
-    second:{
-      name: 'Good bye World',
-      id: 'second',
-      bgColor: 'ORANGE',
-    },
-    third:{
-      name: 'Third',
-      id: 'third',
-      bgColor: 'YELLOW',
-    },
-    fourth:{
-      name: 'Fourth',
-      id: 'fourth',
-      bgColor: 'RED',
-    },
-  }
-  render() {
-    const {first, second, third, fourth} = this.state;
-
-    return (
-      <div className="App ">
-        <p className='Header'>
-          Drag And Drop (?)
-        </p>
-        <div className='containerDrag'>
-          <table>
-            <tbody>
-              <tr>
-                <td> 
-                  <DragCom id={first.id} name={first.name} bgColor={first.bgColor} />
-                </td>
-                <td> 
-                 <DragCom id={second.id} name={second.name} bgColor={second.bgColor} />
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>  
-                  <DragCom id={third.id} name={third.name} bgColor={third.bgColor} />
-                </td>
-              </tr>
-            </tbody>
-
-                
-            
-          </table>
-         
-        </div>
-        <DragCom id={fourth.id} name={fourth.name} bgColor={fourth.bgColor} />
-      </div>
-    );
-  }
-}
-
-export default App2;
+export default App;
